@@ -62,6 +62,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     MatListModule,
     MatTableModule,
     MatInputModule,
+    MatSortModule,
     TabelComponent
   ]
 })

@@ -6,6 +6,8 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
+import { filter } from 'rxjs';
+import { DataSource } from '@angular/cdk/collections';
 
 export interface PeriodicElement {
   name: string;
@@ -49,20 +51,41 @@ export class TabelComponent implements AfterViewInit{
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
+  // filteredData = this.dataSource.data;
+
   filters = { position: '', name: '', weight: '', symbol: '' };
 
   applyFilter() {
-    const filterValues = Object.values(this.filters).map(value => value.trim().toLowerCase());
-    console.log(filterValues.join(''));
-    this.dataSource.filter = filterValues.join('');
-  }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.dataSource.data = ELEMENT_DATA;
+    
+    if (this.filters.position !== "")
+    {
+      this.dataSource.data = this.dataSource.data.filter((item) => item.position.toString().includes(this.filters.position));
+    }
+
+    if (this.filters.name !== "")
+    {
+      this.dataSource.data = this.dataSource.data.filter((item) => item.name.includes(this.filters.name));
+    }
+
+    if (this.filters.weight !== "")
+    {
+      this.dataSource.data = this.dataSource.data.filter((item) => item.weight.toString().includes(this.filters.weight));
+    }
+
+    if (this.filters.symbol !== "")
+    {
+      this.dataSource.data = this.dataSource.data.filter((item) => item.symbol.toString().includes(this.filters.symbol));
+    }
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;    
   }
 }
