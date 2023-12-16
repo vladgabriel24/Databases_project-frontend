@@ -5,35 +5,20 @@
                  [fixedInViewport]="sidenav_options.fixed" [fixedTopGap]="sidenav_options.top"
                  [fixedBottomGap]="sidenav_options.bottom">
       Sidenav
+      <mat-toolbar color="primary">Menu</mat-toolbar>
+      <mat-nav-list>
+        <a mat-list-item routerLink="/">Menu 1</a>
+        <a mat-list-item routerLink="/">Menu 2</a>
+      </mat-nav-list>
     </mat-sidenav>
 
     <!-- Content-ul din sidenav -->
     <mat-sidenav-content>
       Sidenav Content
       <h1 class="mat-h1">Dashboard</h1>
-      <mat-grid-list cols="2" rowHeight="350px">
-        @for (card of cards | async; track card.title) {
-          <mat-grid-tile [colspan]="card.cols" [rowspan]="card.rows">
-            <mat-card class="dashboard-card">
-              <mat-card-header>
-                <mat-card-title>
-                  {{card.title}}
-                  <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <mat-menu #menu="matMenu" xPosition="before">
-                    <button mat-menu-item>Expand</button>
-                    <button mat-menu-item>Remove</button>
-                  </mat-menu>
-                </mat-card-title>
-              </mat-card-header>
-              <mat-card-content class="dashboard-card-content">
-                <div>Card Content Here</div>
-              </mat-card-content>
-            </mat-card>
-          </mat-grid-tile>
-        }
-      </mat-grid-list>
+      <!-- Tabelul -->
+      <app-tabel></app-tabel>
+      <!-- Tabelul -->
     </mat-sidenav-content>
     <!-- Content-ul din sidenav -->
   </mat-sidenav-container>
