@@ -2,11 +2,16 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +20,13 @@ import { MatCardModule } from '@angular/material/card';
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatToolbarModule,
     MatGridListModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    MatSidenavModule,
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
@@ -23,6 +34,14 @@ import { MatCardModule } from '@angular/material/card';
   ]
 })
 export class DashboardComponent {
+
+  sidenav_options =
+  {
+    bottom: 0,
+    fixed: false,
+    top: 0,
+  };
+
   private breakpointObserver = inject(BreakpointObserver);
 
   /** Based on the screen size, switch from standard to one column per row */
@@ -45,4 +64,5 @@ export class DashboardComponent {
       ];
     })
   );
+
 }

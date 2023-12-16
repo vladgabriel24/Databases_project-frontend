@@ -21,3 +21,7 @@
   text-align: center;
   font-size: 300;
 }
+
+mat-sidenav {
+  width: 200px;
+}
