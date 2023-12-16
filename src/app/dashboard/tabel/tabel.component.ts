@@ -51,8 +51,6 @@ export class TabelComponent implements AfterViewInit{
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
-  // filteredData = this.dataSource.data;
-
   filters = { position: '', name: '', weight: '', symbol: '' };
 
   applyFilter() {
