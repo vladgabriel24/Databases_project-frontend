@@ -8,6 +8,22 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { filter } from 'rxjs';
 import { DataSource } from '@angular/cdk/collections';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
+import {
+  MatDialog,
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose,
+} from '@angular/material/dialog';
+
+import {AddDataDialogComponent} from '../add-data-dialog/add-data-dialog.component'
+
+
 
 export interface PeriodicElement {
   name: string;
@@ -38,12 +54,18 @@ const ELEMENT_DATA: PeriodicElement[] = [
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    FormsModule
+    FormsModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatButtonModule,
+    AddDataDialogComponent
   ],
   templateUrl: './tabel.component.html',
   styleUrl: './tabel.component.css'
 })
 export class TabelComponent implements AfterViewInit{
+
+  constructor(public dialog: MatDialog) {}
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -85,5 +107,16 @@ export class TabelComponent implements AfterViewInit{
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;    
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddDataDialogComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.dataSource.data = [...this.dataSource.data, result];
+    });
   }
 }

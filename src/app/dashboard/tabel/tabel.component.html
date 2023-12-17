@@ -17,6 +17,10 @@
     <mat-label>Filter by Symbol</mat-label>
     <input matInput [(ngModel)]="filters.symbol" (keyup)="applyFilter()">
 </mat-form-field>
+
+<button mat-raised-button (click)="openDialog()" matTooltip="Primary" color="primary">
+    <mat-icon>plus_one</mat-icon>
+</button>
   
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
