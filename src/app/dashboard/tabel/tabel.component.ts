@@ -116,7 +116,11 @@ export class TabelComponent implements AfterViewInit{
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.dataSource.data = [...this.dataSource.data, result];
+      
+      if (result != '') {
+        this.dataSource.data = [...this.dataSource.data, result];
+      }
+
     });
   }
 }
