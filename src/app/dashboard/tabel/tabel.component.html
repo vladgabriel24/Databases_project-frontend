@@ -18,9 +18,11 @@
     <input matInput [(ngModel)]="filters.symbol" (keyup)="applyFilter()">
 </mat-form-field>
 
-<button mat-raised-button (click)="openDialog()" matTooltip="Primary" color="primary">
+<!-- Butoanele care vor aparea cand intram pe meniul de edit -->
+<button *ngIf="currentMenu === 'edit-menu'" mat-raised-button (click)="openDialog()" matTooltip="Primary" color="primary">
     <mat-icon>plus_one</mat-icon>
 </button>
+<!-- Butoanele care vor aparea cand intram pe meniul de edit -->
   
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 

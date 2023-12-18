@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
@@ -49,6 +51,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   selector: 'app-tabel',
   standalone: true,
   imports: [
+    CommonModule,
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
@@ -63,12 +66,14 @@ const ELEMENT_DATA: PeriodicElement[] = [
   templateUrl: './tabel.component.html',
   styleUrl: './tabel.component.css'
 })
-export class TabelComponent implements AfterViewInit{
+export class TabelComponent implements OnInit,AfterViewInit{
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private route: ActivatedRoute) {}
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  currentMenu!:string;
 
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
@@ -102,6 +107,16 @@ export class TabelComponent implements AfterViewInit{
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  ngOnInit(): void {
+    // Access route information here
+    this.route.url.subscribe((segments) => {
+      // 'segments' is an array of route segments
+      this.currentMenu = segments[0].path;
+      console.log('Current Menu:', this.currentMenu);
+
+    });
   }
 
   ngAfterViewInit() {
