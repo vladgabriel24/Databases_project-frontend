@@ -7,7 +7,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
   selector: 'app-root',
   standalone: true,
   imports: [
-    CommonModule, 
+    CommonModule,
     RouterOutlet,
     DashboardComponent
   ],

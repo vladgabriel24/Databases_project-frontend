@@ -7,8 +7,8 @@
       Sidenav
       <mat-toolbar color="primary">Menu</mat-toolbar>
       <mat-nav-list>
-        <a mat-list-item routerLink="/">Menu 1</a>
-        <a mat-list-item routerLink="/">Menu 2</a>
+        <a mat-list-item routerLink="/view-menu" routerLinkActive="active">Menu 1</a>
+        <a mat-list-item routerLink="/edit-menu" routerLinkActive="active">Menu 2</a>
       </mat-nav-list>
     </mat-sidenav>
 
@@ -17,7 +17,7 @@
       Sidenav Content
       <h1 class="mat-h1">Dashboard</h1>
       <!-- Tabelul -->
-      <app-tabel></app-tabel>
+      <router-outlet></router-outlet>
       <!-- Tabelul -->
     </mat-sidenav-content>
     <!-- Content-ul din sidenav -->

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, AfterViewInit, ViewChild } from '@angular/core';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -48,6 +49,9 @@ const ELEMENT_DATA: PeriodicElement[] = [
   standalone: true,
   imports: [
     CommonModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
     FormsModule,
     ReactiveFormsModule,
     MatToolbarModule,
