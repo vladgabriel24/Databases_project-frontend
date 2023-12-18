@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import {MatMenuModule, MatMenuTrigger} from '@angular/material/menu';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { filter } from 'rxjs';
-import { DataSource } from '@angular/cdk/collections';
+import { DataSource, SelectionModel } from '@angular/cdk/collections';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
@@ -24,7 +26,6 @@ import {
 } from '@angular/material/dialog';
 
 import {AddDataDialogComponent} from '../add-data-dialog/add-data-dialog.component'
-
 
 
 export interface PeriodicElement {
@@ -52,6 +53,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   standalone: true,
   imports: [
     CommonModule,
+    MatMenuModule,
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
@@ -61,6 +63,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     MatIconModule,
     MatTooltipModule,
     MatButtonModule,
+    MatCheckboxModule,
     AddDataDialogComponent
   ],
   templateUrl: './tabel.component.html',
@@ -68,17 +71,39 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class TabelComponent implements OnInit,AfterViewInit{
 
-  constructor(public dialog: MatDialog, private route: ActivatedRoute) {}
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatMenuTrigger) contextMenuTrigger!: MatMenuTrigger;
 
   currentMenu!:string;
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
+  selection = new SelectionModel<PeriodicElement>(true, []);
+
   filters = { position: '', name: '', weight: '', symbol: '' };
+
+  constructor(public dialog: MatDialog, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    // Access route information here
+    this.route.url.subscribe((segments) => {
+      // 'segments' is an array of route segments
+      this.currentMenu = segments[0].path;
+      console.log('Current Menu:', this.currentMenu);
+
+    });
+
+    if(this.currentMenu !== 'edit-menu') {
+      this.displayedColumns = ['position', 'name', 'weight', 'symbol'];
+    }
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;    
+  }
 
   applyFilter() {
 
@@ -109,21 +134,6 @@ export class TabelComponent implements OnInit,AfterViewInit{
     }
   }
 
-  ngOnInit(): void {
-    // Access route information here
-    this.route.url.subscribe((segments) => {
-      // 'segments' is an array of route segments
-      this.currentMenu = segments[0].path;
-      console.log('Current Menu:', this.currentMenu);
-
-    });
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;    
-  }
-
   openDialog(): void {
     const dialogRef = this.dialog.open(AddDataDialogComponent, {
       width: '400px',
@@ -138,4 +148,46 @@ export class TabelComponent implements OnInit,AfterViewInit{
 
     });
   }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.dataSource.data);
+  }
+
+
+  checkboxLabel(row?: PeriodicElement): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
+
+  isRowRightClicked(row: any[]){
+    console.log("Bau");
+  }
+
+  onRowRightClick(event: MouseEvent, row: any[]): void {
+    event.preventDefault();
+
+    // Show the context menu at the right-clicked position
+    this.contextMenuTrigger.menuData = { row }; // Pass data to the context menu if needed
+    this.contextMenuTrigger.openMenu();
+  }
+
+  editRow(){
+    console.log("Hau");
+  }
+  
 }

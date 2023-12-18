@@ -1,0 +1,18 @@
+table {
+    width: 100%;
+}
+
+tr.mat-row {
+    cursor: pointer;
+}
+
+.mat-row.clicked {
+    background-color: #0a98d5; /* Change to the color you prefer */
+    transition: background-color 0.3s;
+}
+  
+/* Add styles for the selected row */
+.mat-row.selected {
+    background-color: #e0a3a9; /* Change to the color you prefer */
+}
+
