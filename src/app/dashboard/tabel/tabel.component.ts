@@ -25,7 +25,8 @@ import {
   MatDialogClose,
 } from '@angular/material/dialog';
 
-import { AddDataDialogComponent } from '../add-data-dialog/add-data-dialog.component'
+import { AddDataDialogComponent } from '../add-data-dialog/add-data-dialog.component';
+import { EditDataDialogComponent } from '../edit-data-dialog/edit-data-dialog.component';
 
 
 export interface PeriodicElement {
@@ -64,7 +65,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     MatTooltipModule,
     MatButtonModule,
     MatCheckboxModule,
-    AddDataDialogComponent
+    AddDataDialogComponent,
+    EditDataDialogComponent
   ],
   templateUrl: './tabel.component.html',
   styleUrl: './tabel.component.css'
@@ -77,7 +79,7 @@ export class TabelComponent implements OnInit, AfterViewInit {
 
   currentMenu!: string;
 
-  displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol', 'actions'];
 
   /*
     Aici la dataSource, vom avea un API call care ne va intoarce tabelul final
@@ -88,6 +90,8 @@ export class TabelComponent implements OnInit, AfterViewInit {
   selection = new SelectionModel<PeriodicElement>(true, []);
 
   filters = { position: '', name: '', weight: '', symbol: '' };
+
+  row_actioned = {};
 
   constructor(public dialog: MatDialog, private route: ActivatedRoute) { }
 
@@ -167,17 +171,37 @@ export class TabelComponent implements OnInit, AfterViewInit {
 
   isRowRightClicked(row: any[]) {
     console.log("Bau");
+    console.log(row);
   }
 
-  onRowRightClick(event: MouseEvent, row: any[]): void {
-    event.preventDefault();
+  /*
+    Aici practic voi marca cu o variabila ce date am "selectat" (deoarece randurile in tabel vor fi unice), adica in ce rand am apasat butonul de actions
+    pe baza acestor date fac comparatie in baza de date si pot sterge/edita tuplul respectiv.
 
-    this.contextMenuTrigger.menuData = { row }; // Pass data to the context
-    this.contextMenuTrigger.openMenu();
+    M-am bazat pe faptul ca nu putem apasa butonul de actions si apoi da edit/delete la alt rand.
+    Este imposibil dpdv al UI.
+  */
+  actionOnSpecRow(row:any[]) {
+    this.row_actioned = row;
   }
 
-  editRow() {
-    console.log("Hau");
-  }
+  openEditDialog(): void {
+    const dialogRef = this.dialog.open(EditDataDialogComponent, {
+      width: '400px',
+      height: '600px',
+      data: this.row_actioned
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+      /*
+        Aici va fi un API call ce va avea ca parametru variabila "result"
+        si prin API se va executa ALTER in baza de date
+      */
+      console.log(result);
+
+    });
+
+  }
 }

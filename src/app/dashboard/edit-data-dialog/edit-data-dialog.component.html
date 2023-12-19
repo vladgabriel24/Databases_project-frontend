@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>Hi</h1>
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+      <mat-form-field>
+        <input matInput placeholder="Position" name="position" [(ngModel)]="formData.position" required>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput placeholder="Name" name="name" [(ngModel)]="formData.name" required>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput placeholder="Weight" name="weight" [(ngModel)]="formData.weight" required>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput placeholder="Symbol" name="symbol" [(ngModel)]="formData.symbol" required>
+      </mat-form-field>
+    </mat-dialog-content>
+  
+    <mat-dialog-actions>
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-button type="submit" [disabled]="!form.valid">OK</button>
+    </mat-dialog-actions>
+  </form>

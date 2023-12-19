@@ -14,10 +14,8 @@ import {
   MatDialogClose,
 } from '@angular/material/dialog';
 
-import {PeriodicElement} from '../tabel/tabel.component'
-
 @Component({
-  selector: 'app-add-data-dialog',
+  selector: 'app-edit-data-dialog',
   standalone: true,
   imports: [
     CommonModule,
@@ -30,16 +28,18 @@ import {PeriodicElement} from '../tabel/tabel.component'
     MatDialogActions,
     MatDialogClose
   ],
-  templateUrl: './add-data-dialog.component.html',
-  styleUrl: './add-data-dialog.component.css'
+  templateUrl: './edit-data-dialog.component.html',
+  styleUrl: './edit-data-dialog.component.css'
 })
-export class AddDataDialogComponent {
-
-  formData : any = {};
+export class EditDataDialogComponent {
+  
 
   constructor(
-    public dialogRef: MatDialogRef<AddDataDialogComponent>
+    public dialogRef: MatDialogRef<EditDataDialogComponent>
+    ,@Inject(MAT_DIALOG_DATA) public data: any
   ) {}
+
+  formData = this.data;
 
   onSubmit(): void {
     this.dialogRef.close(this.formData);
@@ -48,5 +48,4 @@ export class AddDataDialogComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 }
