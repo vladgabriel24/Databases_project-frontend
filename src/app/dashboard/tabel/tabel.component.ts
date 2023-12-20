@@ -27,6 +27,7 @@ import {
 
 import { AddDataDialogComponent } from '../add-data-dialog/add-data-dialog.component';
 import { EditDataDialogComponent } from '../edit-data-dialog/edit-data-dialog.component';
+import { DeleteDataDialogComponent } from '../delete-data-dialog/delete-data-dialog.component';
 
 
 export interface PeriodicElement {
@@ -36,7 +37,7 @@ export interface PeriodicElement {
   symbol: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
+export let ELEMENT_DATA: PeriodicElement[] = [
   { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
   { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
   { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
@@ -91,7 +92,7 @@ export class TabelComponent implements OnInit, AfterViewInit {
 
   filters = { position: '', name: '', weight: '', symbol: '' };
 
-  row_actioned = {};
+  row_actioned:any = {};
 
   constructor(public dialog: MatDialog, private route: ActivatedRoute) { }
 
@@ -135,25 +136,6 @@ export class TabelComponent implements OnInit, AfterViewInit {
     }
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(AddDataDialogComponent, {
-      width: '400px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-
-      /*
-        Aici va fi un API call ce va avea ca parametru variabila "result"
-        si prin API se va executa INSERT in baza de date
-      */
-      if (result != '') {
-        this.dataSource.data = [...this.dataSource.data, result];
-      }
-
-    });
-  }
-
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
@@ -169,9 +151,24 @@ export class TabelComponent implements OnInit, AfterViewInit {
     this.selection.select(...this.dataSource.data);
   }
 
-  isRowRightClicked(row: any[]) {
-    console.log("Bau");
-    console.log(row);
+  openAddDialog(): void {
+    const dialogRef = this.dialog.open(AddDataDialogComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The add dialog was closed');
+      console.log(result);
+
+      /*
+        Aici va fi un API call ce va avea ca parametru variabila "result"
+        si prin API se va executa INSERT in baza de date
+      */
+      if (result != '') {
+        this.dataSource.data = [...this.dataSource.data, result];
+      }
+
+    });
   }
 
   /*
@@ -181,26 +178,89 @@ export class TabelComponent implements OnInit, AfterViewInit {
     M-am bazat pe faptul ca nu putem apasa butonul de actions si apoi da edit/delete la alt rand.
     Este imposibil dpdv al UI.
   */
-  actionOnSpecRow(row:any[]) {
+  actionOnSpecRow(row:{}) {
     this.row_actioned = row;
+    console.log(this.row_actioned);
   }
 
   openEditDialog(): void {
     const dialogRef = this.dialog.open(EditDataDialogComponent, {
       width: '400px',
-      height: '600px',
       data: this.row_actioned
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('The edit dialog was closed');
+      console.log(result);
 
       /*
         Aici va fi un API call ce va avea ca parametru variabila "result"
         si prin API se va executa ALTER in baza de date
       */
+      let index = this.dataSource.data.indexOf(this.row_actioned);
+      this.dataSource.data[index] = result;
+
+    });
+
+  }
+
+  openDeleteDialog(): void {
+    const dialogRef = this.dialog.open(DeleteDataDialogComponent, {
+      width: '400px',
+      data: this.row_actioned
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The delete dialog was closed');
       console.log(result);
 
+      /*
+        Aici va fi un API call ce va avea ca parametru variabila "result"
+        si prin API se va executa DELETE in baza de date
+      */
+      
+      if(result !== null) {
+        let index = this.dataSource.data.indexOf(result);
+        for(let i=index; i<this.dataSource.data.length-1; i++) {
+          this.dataSource.data[i] = this.dataSource.data[i+1];
+        }
+
+        this.dataSource.data.pop();
+      }
+
+      this.dataSource.data = this.dataSource.data;
+      console.log(this.dataSource.data);
+    });
+
+  }
+
+  openDelSelDialog(): void {
+    const dialogRef = this.dialog.open(DeleteDataDialogComponent, {
+      width: '400px',
+      data: this.selection.selected
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The delete dialog was closed');
+      console.log(result);
+
+      /*
+        Aici va fi un API call ce va avea ca parametru variabila "result"
+        si prin API se va executa DELETE in baza de date
+      */
+
+      this.dataSource.data = this.dataSource.data.filter((item) => {
+        if(result.indexOf(item) == -1) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      });
+
+      this.selection.clear();
+      
+      this.dataSource.data = this.dataSource.data;
     });
 
   }
