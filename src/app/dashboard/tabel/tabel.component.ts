@@ -24,6 +24,8 @@ import {
   MatDialogActions,
   MatDialogClose,
 } from '@angular/material/dialog';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 import { AddDataDialogComponent } from '../add-data-dialog/add-data-dialog.component';
 import { EditDataDialogComponent } from '../edit-data-dialog/edit-data-dialog.component';
@@ -66,6 +68,8 @@ export let ELEMENT_DATA: PeriodicElement[] = [
     MatTooltipModule,
     MatButtonModule,
     MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     AddDataDialogComponent,
     EditDataDialogComponent
   ],
@@ -90,7 +94,7 @@ export class TabelComponent implements OnInit, AfterViewInit {
 
   selection = new SelectionModel<PeriodicElement>(true, []);
 
-  filters = { position: '', name: '', weight: '', symbol: '' };
+  filters = { position: '', name: '', weight: '', symbol: '', date: '' };
 
   row_actioned:any = {};
 
@@ -129,6 +133,12 @@ export class TabelComponent implements OnInit, AfterViewInit {
 
     if (this.filters.symbol !== "") {
       this.dataSource.data = this.dataSource.data.filter((item) => item.symbol.toString().includes(this.filters.symbol));
+    }
+
+    if (this.filters.date !== "") {
+      // Filtrare dupa data, va trebui umblat la format
+      console.log(this.filters.date);
+      // this.dataSource.data = this.dataSource.data.filter((item) => item.symbol.toString().includes(this.filters.date));
     }
 
     if (this.dataSource.paginator) {
