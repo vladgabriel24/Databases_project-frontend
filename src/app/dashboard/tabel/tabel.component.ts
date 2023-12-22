@@ -97,6 +97,7 @@ export class TabelComponent implements OnInit, AfterViewInit {
   filters = { position: '', name: '', weight: '', symbol: '', date: '' };
 
   row_actioned:any = {};
+  index_row_actioned:number = -1;
 
   constructor(public dialog: MatDialog, private route: ActivatedRoute) { }
 
@@ -190,13 +191,15 @@ export class TabelComponent implements OnInit, AfterViewInit {
   */
   actionOnSpecRow(row:{}) {
     this.row_actioned = row;
+    this.index_row_actioned = this.dataSource.data.indexOf(this.row_actioned);
     console.log(this.row_actioned);
+    console.log(this.index_row_actioned);
   }
 
   openEditDialog(): void {
     const dialogRef = this.dialog.open(EditDataDialogComponent, {
       width: '400px',
-      data: this.row_actioned
+      data: (JSON.parse(JSON.stringify(this.row_actioned)))
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -207,8 +210,11 @@ export class TabelComponent implements OnInit, AfterViewInit {
         Aici va fi un API call ce va avea ca parametru variabila "result"
         si prin API se va executa ALTER in baza de date
       */
-      let index = this.dataSource.data.indexOf(this.row_actioned);
-      this.dataSource.data[index] = result;
+      
+      if (result !== "") {
+        this.dataSource.data[this.index_row_actioned] = result;
+      }
+      this.dataSource.data = this.dataSource.data;
 
     });
 

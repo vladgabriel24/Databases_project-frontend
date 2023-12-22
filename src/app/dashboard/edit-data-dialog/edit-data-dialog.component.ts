@@ -46,6 +46,6 @@ export class EditDataDialogComponent {
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(undefined);
   }
 }
