@@ -31,6 +31,7 @@ import { AddDataDialogComponent } from '../add-data-dialog/add-data-dialog.compo
 import { EditDataDialogComponent } from '../edit-data-dialog/edit-data-dialog.component';
 import { DeleteDataDialogComponent } from '../delete-data-dialog/delete-data-dialog.component';
 
+import { ServerService } from '../../services/server.service';
 
 export interface PeriodicElement {
   name: string;
@@ -99,7 +100,9 @@ export class TabelComponent implements OnInit, AfterViewInit {
   row_actioned:any = {};
   index_row_actioned:number = -1;
 
-  constructor(public dialog: MatDialog, private route: ActivatedRoute) { }
+  constructor(public dialog: MatDialog, 
+              private route: ActivatedRoute,
+              private server: ServerService) { }
 
   ngOnInit(): void {
     this.route.url.subscribe((segments) => {
@@ -110,11 +113,21 @@ export class TabelComponent implements OnInit, AfterViewInit {
     if (this.currentMenu !== 'edit-menu') {
       this.displayedColumns = ['position', 'name', 'weight', 'symbol'];
     }
+
+    this.getInfo();
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  getInfo() {
+    this.server.getEvents().then((respose:any) => {
+
+      console.log(respose);
+      
+    })
   }
 
   applyFilter() {
