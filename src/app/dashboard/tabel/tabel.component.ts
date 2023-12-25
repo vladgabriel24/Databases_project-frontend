@@ -30,6 +30,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import { AddDataDialogComponent } from '../add-data-dialog/add-data-dialog.component';
 import { EditDataDialogComponent } from '../edit-data-dialog/edit-data-dialog.component';
 import { DeleteDataDialogComponent } from '../delete-data-dialog/delete-data-dialog.component';
+import { MoreInfoDialogComponent } from '../more-info-dialog/more-info-dialog.component';
 
 import { ServerService } from '../../services/server.service';
 
@@ -72,7 +73,8 @@ export let ELEMENT_DATA: PeriodicElement[] = [
     MatDatepickerModule,
     MatNativeDateModule,
     AddDataDialogComponent,
-    EditDataDialogComponent
+    EditDataDialogComponent,
+    MoreInfoDialogComponent
   ],
   templateUrl: './tabel.component.html',
   styleUrl: './tabel.component.css'
@@ -114,7 +116,7 @@ export class TabelComponent implements OnInit, AfterViewInit {
       this.displayedColumns = ['position', 'name', 'weight', 'symbol'];
     }
 
-    this.getInfo();
+    // this.getInfo();
   }
 
   ngAfterViewInit() {
@@ -270,7 +272,7 @@ export class TabelComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The delete dialog was closed');
+      console.log('The delsel dialog was closed');
       console.log(result);
 
       /*
@@ -293,4 +295,23 @@ export class TabelComponent implements OnInit, AfterViewInit {
     });
 
   }
+
+  openMoreInfoDialog(): void {
+    /*
+      Un API care sa ne returneze informatii suplimentare
+    */
+
+    const dialogRef = this.dialog.open(MoreInfoDialogComponent, {
+      width: '400px',
+      data: 'informatii suplimentare' // aici vom pune ce va returna API-ul
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The more info dialog was closed');
+      console.log(result);
+    });
+
+  }
+
+
 }
