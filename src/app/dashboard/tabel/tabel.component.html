@@ -1,7 +1,7 @@
 <!-- Meniul care apare dupa apasarea butonului actions -->
 <mat-menu #actionsMenu="matMenu">
-    <button mat-menu-item (click)="openEditDialog()">Edit</button>
-    <button mat-menu-item (click)="openDeleteDialog()">Delete</button>
+    <button *ngIf="currentMenu === 'edit-menu'" mat-menu-item (click)="openEditDialog()">Edit</button>
+    <button *ngIf="currentMenu === 'edit-menu'" mat-menu-item (click)="openDeleteDialog()">Delete</button>
     <button mat-menu-item (click)="openMoreInfoDialog()">More Info</button>
 </mat-menu>
 

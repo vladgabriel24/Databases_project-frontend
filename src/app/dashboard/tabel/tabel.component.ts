@@ -113,7 +113,7 @@ export class TabelComponent implements OnInit, AfterViewInit {
     });
 
     if (this.currentMenu !== 'edit-menu') {
-      this.displayedColumns = ['position', 'name', 'weight', 'symbol'];
+      this.displayedColumns = ['position', 'name', 'weight', 'symbol', 'actions'];
     }
 
     // this.getInfo();
