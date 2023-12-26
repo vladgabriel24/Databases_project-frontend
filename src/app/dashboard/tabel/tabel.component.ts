@@ -190,7 +190,7 @@ export class TabelComponent implements OnInit, AfterViewInit {
         Aici va fi un API call ce va avea ca parametru variabila "result"
         si prin API se va executa INSERT in baza de date
       */
-      if (result != '') {
+      if (result !== '' && undefined) {
         this.dataSource.data = [...this.dataSource.data, result];
       }
 
@@ -226,7 +226,7 @@ export class TabelComponent implements OnInit, AfterViewInit {
         si prin API se va executa ALTER in baza de date
       */
       
-      if (result !== "") {
+      if (result !== "" && undefined) {
         this.dataSource.data[this.index_row_actioned] = result;
       }
       this.dataSource.data = this.dataSource.data;
@@ -250,7 +250,7 @@ export class TabelComponent implements OnInit, AfterViewInit {
         si prin API se va executa DELETE in baza de date
       */
       
-      if(result !== null) {
+      if(result !== null && undefined) {
         let index = this.dataSource.data.indexOf(result);
         for(let i=index; i<this.dataSource.data.length-1; i++) {
           this.dataSource.data[i] = this.dataSource.data[i+1];
@@ -280,18 +280,21 @@ export class TabelComponent implements OnInit, AfterViewInit {
         si prin API se va executa DELETE in baza de date
       */
 
-      this.dataSource.data = this.dataSource.data.filter((item) => {
-        if(result.indexOf(item) == -1) {
-          return true;
-        }
-        else {
-          return false;
-        }
-      });
+      if(result !== null && undefined) {
 
-      this.selection.clear();
-      
-      this.dataSource.data = this.dataSource.data;
+        this.dataSource.data = this.dataSource.data.filter((item) => {
+          if(result.indexOf(item) == -1) {
+            return true;
+          }
+          else {
+            return false;
+          }
+        });
+
+        this.selection.clear();
+        
+        this.dataSource.data = this.dataSource.data;
+      }
     });
 
   }
