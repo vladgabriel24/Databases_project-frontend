@@ -136,8 +136,12 @@ export class TabelComponent implements OnInit, AfterViewInit {
     if (this.filters.Data !== "") {
       console.log(this.filters.Data);
 
-      
-      this.dataSource.data = this.dataSource.data.filter((item) => item.Data.toString().includes(this.filters.Data));
+      const parsedDate = new Date(this.filters.Data);
+
+      // Format the date in MM/DD/YYYY format
+      const formattedDate = parsedDate.toLocaleDateString([], { year: "numeric", month: "numeric", day: "numeric" });
+            
+      this.dataSource.data = this.dataSource.data.filter((item) => item.Data.toString().includes(formattedDate));
     }
 
     if (this.filters.Ora !== "") {
