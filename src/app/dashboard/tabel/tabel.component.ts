@@ -99,7 +99,8 @@ export class TabelComponent implements OnInit, AfterViewInit {
     }
 
     this.dataSource.data = Table_DATA;
-    // this.getInfo();
+    console.log(this.dataSource.data);
+    
   }
 
   ngAfterViewInit() {
@@ -297,7 +298,7 @@ export class TabelComponent implements OnInit, AfterViewInit {
 
     const dialogRef = this.dialog.open(MoreInfoDialogComponent, {
       width: '400px',
-      data: 'informatii suplimentare' // aici vom pune ce va returna API-ul
+      data: (JSON.parse(JSON.stringify(this.row_actioned))) // aici vom pune ce va returna API-ul
     });
 
     dialogRef.afterClosed().subscribe(result => {

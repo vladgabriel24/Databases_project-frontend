@@ -17,6 +17,7 @@ export class ServerService {
 
   private async request(method: string, url: string, data?: any) {
 
+    console.log(data);
     const result = this.http.request(method, url, {
       body: data,
       responseType: 'json',
@@ -32,12 +33,39 @@ export class ServerService {
     return this.request('GET', `${environment.serverUrl}/tblGED`);
   }
 
-  createEvent(event:any) {
-    // return this.request('POST', `${environment.serverUrl}/event`, event);
+  get_more_info_disciplina(data:any) {
+    console.log(data);
+    return this.request('POST', `${environment.serverUrl}/more-info/disciplina`, data);
   }
 
-  updateEvent(event:any) {
-    // return this.request('PUT', `${environment.serverUrl}/event/${event.id}`, event);
+  get_more_info_profesor(data:any) {
+    console.log(data);
+    return this.request('POST', `${environment.serverUrl}/more-info/profesor`, data);
+  }
+
+  get_more_info_serie(data:any) {
+    console.log(data);
+    return this.request('POST', `${environment.serverUrl}/more-info/serie`, data);
+  }
+
+  get_more_info_grupa(data:any) {
+    console.log(data);
+    return this.request('POST', `${environment.serverUrl}/more-info/grupa`, data);
+  }
+
+  get_studenti_serie(data:any) {
+    console.log(data);
+    return this.request('POST', `${environment.serverUrl}/studenti/serie`, data);
+  }
+
+  get_studenti_grupa_serie(data:any) {
+    console.log(data);
+    return this.request('POST', `${environment.serverUrl}/studenti/grupa-serie`, data);
+  }
+
+  get_more_info_examen(data:any) {
+    console.log(data);
+    return this.request('POST', `${environment.serverUrl}/more-info/examen`, data);
   }
 
   deleteEvent(event:any) {

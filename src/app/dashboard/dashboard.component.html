@@ -4,7 +4,6 @@
     <mat-sidenav #sidenav mode="side" opened class="sidenav-sidenav"
                  [fixedInViewport]="sidenav_options.fixed" [fixedTopGap]="sidenav_options.top"
                  [fixedBottomGap]="sidenav_options.bottom">
-      Sidenav
       <mat-toolbar color="primary">Menu</mat-toolbar>
       <mat-nav-list>
         <a mat-list-item routerLink="/view-menu" routerLinkActive="active">View Menu</a>
@@ -14,8 +13,7 @@
 
     <!-- Content-ul din sidenav -->
     <mat-sidenav-content *ngIf="isDataLoaded">
-      Sidenav Content
-      <h1 class="mat-h1">Dashboard</h1>
+      <h1 class="mat-h1">Final Exams Organizer</h1>
       <!-- Tabelul -->
       <router-outlet></router-outlet>
       <!-- Tabelul -->

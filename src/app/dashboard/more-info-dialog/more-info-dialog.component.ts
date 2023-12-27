@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Inject } from '@angular/core';
+import { Component, EventEmitter, Output, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
@@ -19,10 +19,48 @@ import { ProfesorDialogComponent } from './profesor-dialog/profesor-dialog.compo
 import { SerieDialogComponent } from './serie-dialog/serie-dialog.component';
 import { GrupaDialogComponent } from './grupa-dialog/grupa-dialog.component';
 
+import { ServerService } from '../../services/server.service';
+
+interface Disciplina {
+  nume: string;
+  puncteCredit: number;
+}
+
+interface Profesor {
+  nume: string;
+  prenume: string;
+  email: string;
+}
+
+interface Serie {
+  denumire: string;
+  specializare: string;
+  an: number;
+}
+
+interface Grupa {
+  denumire: string;
+  numar: number;
+}
+
+interface Student {
+  nume: string;
+  prenume: string;
+  email: string
+}
+
+interface Examen {
+  punctaj: number;
+  prag: number;
+  durata: number;
+}
+
+
 @Component({
   selector: 'app-more-info-dialog',
   standalone: true,
   imports: [
+    CommonModule,
     MatDialogActions,
     DisciplineDialogComponent,
     ProfesorDialogComponent,
@@ -32,17 +70,94 @@ import { GrupaDialogComponent } from './grupa-dialog/grupa-dialog.component';
   templateUrl: './more-info-dialog.component.html',
   styleUrl: './more-info-dialog.component.css'
 })
-export class MoreInfoDialogComponent {
+export class MoreInfoDialogComponent implements OnInit{
 
   constructor(
+    private server: ServerService,
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<MoreInfoDialogComponent>
     ,@Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
+  info_disciplina?:Disciplina;
+  info_profesor?:Profesor;
+  info_serie?:Serie;
+  info_grupa?:Grupa;
+
+  studenti_serie?:Student[];
+  studenti_grupa?:Student[];
+
+  info_examen?:Examen;
+
+  isDataLoaded=0;
+
+  ngOnInit(): void {
+    const formatedData = this.data['Data'].split('/')[2]+"-"+this.data['Data'].split('/')[0]+"-"+this.data['Data'].split('/')[1];
+    this.data['Data'] = formatedData;
+
+    console.log(this.data);
+    
+    this.server.get_more_info_disciplina(this.data).then((respose: any) => {
+
+      this.info_disciplina = respose;
+      console.log(this.info_disciplina);
+      
+      this.isDataLoaded=this.isDataLoaded+1;
+    })  
+
+    this.server.get_more_info_profesor(this.data).then((respose: any) => {
+
+      this.info_profesor = respose;
+      console.log(this.info_profesor);
+      
+      this.isDataLoaded=this.isDataLoaded+1;
+    })
+
+    this.server.get_more_info_serie(this.data).then((respose: any) => {
+
+      this.info_serie = respose;
+      console.log(this.info_serie);
+      
+      this.isDataLoaded=this.isDataLoaded+1;
+    })
+
+    this.server.get_more_info_grupa(this.data).then((respose: any) => {
+
+      this.info_grupa = respose;
+      console.log(this.info_grupa);
+      
+      this.isDataLoaded=this.isDataLoaded+1;
+    })
+
+    this.server.get_studenti_serie(this.data).then((respose: any) => {
+
+      this.studenti_serie = respose;
+      console.log(this.studenti_serie);
+      
+      this.isDataLoaded=this.isDataLoaded+1;
+    })
+
+    this.server.get_studenti_grupa_serie(this.data).then((respose: any) => {
+
+      this.studenti_grupa = respose;
+      console.log(this.studenti_grupa);
+      
+      this.isDataLoaded=this.isDataLoaded+1;
+    })
+
+    this.server.get_more_info_examen(this.data).then((respose: any) => {
+
+      this.info_examen = respose;
+      console.log(this.info_examen);
+      
+      this.isDataLoaded=this.isDataLoaded+1;
+    })
+
+
+  }
+
   clickDisciplina() {
-    // un API call
-    console.log('bau');
+    // un API call  
 
     const dialogRef = this.dialog.open(DisciplineDialogComponent, {
       width: '400px',

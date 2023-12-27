@@ -1,8 +1,10 @@
 <h1 mat-dialog-title>More information</h1>
-<div mat-dialog-content>
-  <h4 (click)="clickDisciplina()">{{data}}</h4>
-  <h4 (click)="clickProfesori()">{{data}}</h4>
-  <h4 (click)="clickSerie()">{{data}}</h4>
-  <h4 (click)="clickGrupa()">{{data}}</h4>
-  <h5>{{data}}</h5>
+<div mat-dialog-content *ngIf="isDataLoaded === 7">
+  <h4 (click)="clickDisciplina()">Disciplina: </h4>
+  <h4 (click)="clickProfesori()">Profesor: </h4>
+  <h4 (click)="clickSerie()">Serie: </h4>
+  <h4 (click)="clickGrupa()">Grupa: </h4>
+  <h5>Durata: </h5>
+  <h5>Prag: </h5>
+  <h5>Punctaj: </h5>
 </div>
