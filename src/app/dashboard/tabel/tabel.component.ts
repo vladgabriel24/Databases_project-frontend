@@ -133,7 +133,7 @@ export class TabelComponent implements OnInit, AfterViewInit {
       this.dataSource.data = this.dataSource.data.filter((item) => item.Sala.includes(this.filters.Sala));
     }
 
-    if (this.filters.Data !== "") {
+    if (this.filters.Data !== null) {
       console.log(this.filters.Data);
 
       const parsedDate = new Date(this.filters.Data);
