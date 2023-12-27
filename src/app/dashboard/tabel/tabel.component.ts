@@ -34,22 +34,7 @@ import { MoreInfoDialogComponent } from '../more-info-dialog/more-info-dialog.co
 
 import { ServerService } from '../../services/server.service';
 
-export interface Programare {
-  Examen: string;
-  Sala: string;
-  Data: string;
-  Ora: string;
-}
-
-export let ELEMENT_DATA: Programare[] = [
-  { Examen: 'Baze', Sala: 'B220', Data: '20.02.2020', Ora: '11:00' },
-  { Examen: 'Mate', Sala: 'B212', Data: '20.02.2220', Ora: '12:00' },
-  { Examen: 'Fizica', Sala: 'B250', Data: '20.02.2021', Ora: '13:00' },
-  { Examen: 'Chimie', Sala: 'B110', Data: '20.02.2022', Ora: '14:00' },
-  { Examen: 'PC', Sala: 'B220', Data: '20.02.2023', Ora: '15:00' },
-  { Examen: 'SDA', Sala: 'B330', Data: '20.02.2024', Ora: '16:00' },
-  { Examen: 'POO', Sala: 'B225', Data: '20.02.2025', Ora: '11:00' },
-];
+import { Programare, Table_DATA } from '../dashboard.component';
 
 @Component({
   selector: 'app-tabel',
@@ -90,7 +75,7 @@ export class TabelComponent implements OnInit, AfterViewInit {
     Aici la dataSource, vom avea un API call care ne va intoarce tabelul final
     pe care vrem sa il vizionam in aplicatie
   */
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource = new MatTableDataSource(Table_DATA);
 
   selection = new SelectionModel<Programare>(true, []);
 
@@ -113,24 +98,32 @@ export class TabelComponent implements OnInit, AfterViewInit {
       this.displayedColumns = ['Examen', 'Sala', 'Data', 'Ora', 'Actions'];
     }
 
-    this.getInfo();
+    this.dataSource.data = Table_DATA;
+    // this.getInfo();
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.data = Table_DATA;
   }
 
-  getInfo() {
-    this.server.get_tblGED().then((respose:any) => {
+  // getInfo() {
+  //   this.server.get_tblGED().then((respose: any) => {
 
-      console.log(respose);
+  //     Table_DATA = respose.map((item: Programare) => ({
+  //       ...item,
+  //       Data: parseInt(item.Data.split("T")[0].split("-")[1]).toString()+"/"+parseInt(item.Data.split("T")[0].split("-")[2]).toString()+"/"+item.Data.split("T")[0].split("-")[0],
+  //     }));
       
-    })
-  }
+  //   })
+
+  //   console.log(Table_DATA);
+    
+  // }
 
   applyFilter() {
-    this.dataSource.data = ELEMENT_DATA;
+    this.dataSource.data = Table_DATA;
 
     if (this.filters.Examen !== "") {
       this.dataSource.data = this.dataSource.data.filter((item) => item.Examen.toString().includes(this.filters.Examen));
@@ -141,6 +134,9 @@ export class TabelComponent implements OnInit, AfterViewInit {
     }
 
     if (this.filters.Data !== "") {
+      console.log(this.filters.Data);
+
+      
       this.dataSource.data = this.dataSource.data.filter((item) => item.Data.toString().includes(this.filters.Data));
     }
 

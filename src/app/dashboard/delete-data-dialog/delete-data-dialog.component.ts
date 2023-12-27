@@ -14,8 +14,6 @@ import {
   MatDialogClose,
 } from '@angular/material/dialog';
 
-import { ELEMENT_DATA } from '../tabel/tabel.component';
-
 @Component({
   selector: 'app-delete-data-dialog',
   standalone: true,

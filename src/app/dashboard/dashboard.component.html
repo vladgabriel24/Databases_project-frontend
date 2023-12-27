@@ -13,7 +13,7 @@
     </mat-sidenav>
 
     <!-- Content-ul din sidenav -->
-    <mat-sidenav-content>
+    <mat-sidenav-content *ngIf="isDataLoaded">
       Sidenav Content
       <h1 class="mat-h1">Dashboard</h1>
       <!-- Tabelul -->

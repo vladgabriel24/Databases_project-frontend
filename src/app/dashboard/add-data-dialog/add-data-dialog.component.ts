@@ -14,8 +14,6 @@ import {
   MatDialogClose,
 } from '@angular/material/dialog';
 
-import {Programare} from '../tabel/tabel.component'
-
 @Component({
   selector: 'app-add-data-dialog',
   standalone: true,

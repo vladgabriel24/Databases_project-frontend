@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, inject, AfterViewInit, ViewChild, OnInit } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
@@ -20,6 +20,17 @@ import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 
 import { TabelComponent } from './tabel/tabel.component';
+
+import { ServerService } from '../services/server.service';
+
+export interface Programare {
+  Examen: string;
+  Sala: string;
+  Data: string;
+  Ora: string;
+}
+
+export let Table_DATA: Programare[];
 
 @Component({
   selector: 'app-dashboard',
@@ -49,7 +60,31 @@ import { TabelComponent } from './tabel/tabel.component';
     TabelComponent
   ]
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit{
+
+  constructor(public server:ServerService){}
+
+  isDataLoaded=false;
+
+  ngOnInit(): void {
+
+    console.log("vlad");
+    
+    this.getInfo();
+
+  }
+
+  getInfo() {
+    this.server.get_tblGED().then((respose: any) => {
+
+      Table_DATA = respose.map((item: Programare) => ({
+        ...item,
+        Data: parseInt(item.Data.split("T")[0].split("-")[1]).toString()+"/"+parseInt(item.Data.split("T")[0].split("-")[2]).toString()+"/"+item.Data.split("T")[0].split("-")[0],
+      }));
+      
+      this.isDataLoaded=true;
+    })    
+  }
 
   sidenav_options =
   {
