@@ -28,8 +28,8 @@ export class ServerService {
     });
   }
 
-  getEvents() {
-    return this.request('GET', `${environment.serverUrl}/event`);
+  get_tblGED() {
+    return this.request('GET', `${environment.serverUrl}/tblGED`);
   }
 
   createEvent(event:any) {

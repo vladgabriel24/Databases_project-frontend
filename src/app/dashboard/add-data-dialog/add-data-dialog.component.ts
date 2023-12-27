@@ -14,7 +14,7 @@ import {
   MatDialogClose,
 } from '@angular/material/dialog';
 
-import {PeriodicElement} from '../tabel/tabel.component'
+import {Programare} from '../tabel/tabel.component'
 
 @Component({
   selector: 'app-add-data-dialog',

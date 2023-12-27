@@ -34,24 +34,21 @@ import { MoreInfoDialogComponent } from '../more-info-dialog/more-info-dialog.co
 
 import { ServerService } from '../../services/server.service';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+export interface Programare {
+  Examen: string;
+  Sala: string;
+  Data: string;
+  Ora: string;
 }
 
-export let ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
+export let ELEMENT_DATA: Programare[] = [
+  { Examen: 'Baze', Sala: 'B220', Data: '20.02.2020', Ora: '11:00' },
+  { Examen: 'Mate', Sala: 'B212', Data: '20.02.2220', Ora: '12:00' },
+  { Examen: 'Fizica', Sala: 'B250', Data: '20.02.2021', Ora: '13:00' },
+  { Examen: 'Chimie', Sala: 'B110', Data: '20.02.2022', Ora: '14:00' },
+  { Examen: 'PC', Sala: 'B220', Data: '20.02.2023', Ora: '15:00' },
+  { Examen: 'SDA', Sala: 'B330', Data: '20.02.2024', Ora: '16:00' },
+  { Examen: 'POO', Sala: 'B225', Data: '20.02.2025', Ora: '11:00' },
 ];
 
 @Component({
@@ -87,7 +84,7 @@ export class TabelComponent implements OnInit, AfterViewInit {
 
   currentMenu!: string;
 
-  displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol', 'actions'];
+  displayedColumns: string[] = ['Select', 'Examen', 'Sala', 'Data', 'Ora', 'Actions'];
 
   /*
     Aici la dataSource, vom avea un API call care ne va intoarce tabelul final
@@ -95,9 +92,9 @@ export class TabelComponent implements OnInit, AfterViewInit {
   */
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
-  selection = new SelectionModel<PeriodicElement>(true, []);
+  selection = new SelectionModel<Programare>(true, []);
 
-  filters = { position: '', name: '', weight: '', symbol: '', date: '' };
+  filters = { Examen: '', Sala: '', Data: '', Ora: '' };
 
   row_actioned:any = {};
   index_row_actioned:number = -1;
@@ -113,10 +110,10 @@ export class TabelComponent implements OnInit, AfterViewInit {
     });
 
     if (this.currentMenu !== 'edit-menu') {
-      this.displayedColumns = ['position', 'name', 'weight', 'symbol', 'actions'];
+      this.displayedColumns = ['Examen', 'Sala', 'Data', 'Ora', 'Actions'];
     }
 
-    // this.getInfo();
+    this.getInfo();
   }
 
   ngAfterViewInit() {
@@ -125,7 +122,7 @@ export class TabelComponent implements OnInit, AfterViewInit {
   }
 
   getInfo() {
-    this.server.getEvents().then((respose:any) => {
+    this.server.get_tblGED().then((respose:any) => {
 
       console.log(respose);
       
@@ -135,26 +132,20 @@ export class TabelComponent implements OnInit, AfterViewInit {
   applyFilter() {
     this.dataSource.data = ELEMENT_DATA;
 
-    if (this.filters.position !== "") {
-      this.dataSource.data = this.dataSource.data.filter((item) => item.position.toString().includes(this.filters.position));
+    if (this.filters.Examen !== "") {
+      this.dataSource.data = this.dataSource.data.filter((item) => item.Examen.toString().includes(this.filters.Examen));
     }
 
-    if (this.filters.name !== "") {
-      this.dataSource.data = this.dataSource.data.filter((item) => item.name.includes(this.filters.name));
+    if (this.filters.Sala !== "") {
+      this.dataSource.data = this.dataSource.data.filter((item) => item.Sala.includes(this.filters.Sala));
     }
 
-    if (this.filters.weight !== "") {
-      this.dataSource.data = this.dataSource.data.filter((item) => item.weight.toString().includes(this.filters.weight));
+    if (this.filters.Data !== "") {
+      this.dataSource.data = this.dataSource.data.filter((item) => item.Data.toString().includes(this.filters.Data));
     }
 
-    if (this.filters.symbol !== "") {
-      this.dataSource.data = this.dataSource.data.filter((item) => item.symbol.toString().includes(this.filters.symbol));
-    }
-
-    if (this.filters.date !== "") {
-      // Filtrare dupa data, va trebui umblat la format
-      console.log(this.filters.date);
-      // this.dataSource.data = this.dataSource.data.filter((item) => item.symbol.toString().includes(this.filters.date));
+    if (this.filters.Ora !== "") {
+      this.dataSource.data = this.dataSource.data.filter((item) => item.Ora.toString().includes(this.filters.Ora));
     }
 
     if (this.dataSource.paginator) {
