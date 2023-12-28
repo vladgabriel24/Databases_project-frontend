@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -34,7 +34,7 @@ import { MoreInfoDialogComponent } from '../more-info-dialog/more-info-dialog.co
 
 import { ServerService } from '../../services/server.service';
 
-import { Programare, Table_DATA } from '../dashboard.component';
+import { DashboardComponent, Programare, Table_DATA } from '../dashboard.component';
 
 @Component({
   selector: 'app-tabel',
@@ -56,7 +56,8 @@ import { Programare, Table_DATA } from '../dashboard.component';
     MatNativeDateModule,
     AddDataDialogComponent,
     EditDataDialogComponent,
-    MoreInfoDialogComponent
+    MoreInfoDialogComponent,
+    DashboardComponent
   ],
   templateUrl: './tabel.component.html',
   styleUrl: './tabel.component.css'
@@ -84,7 +85,9 @@ export class TabelComponent implements OnInit, AfterViewInit {
   row_actioned:any = {};
   index_row_actioned:number = -1;
 
-  constructor(public dialog: MatDialog, 
+  constructor(private dashboard:DashboardComponent,
+              private cdr: ChangeDetectorRef,
+              public dialog: MatDialog, 
               private route: ActivatedRoute,
               private server: ServerService) { }
 
@@ -178,12 +181,13 @@ export class TabelComponent implements OnInit, AfterViewInit {
       console.log('The add dialog was closed');
       console.log(result);
 
-      /*
-        Aici va fi un API call ce va avea ca parametru variabila "result"
-        si prin API se va executa INSERT in baza de date
-      */
-      if (result !== '' && undefined) {
-        this.dataSource.data = [...this.dataSource.data, result];
+      if(result !== '') {
+        let formatedData = result['Data'].split('/')[2]+"-"+result['Data'].split('/')[0]+"-"+result['Data'].split('/')[1];
+        result['Data'] = formatedData;
+        
+        this.server.add_data(result).then(()=>{this.dashboard.getInfo(); this.dataSource.data=Table_DATA});
+
+        setTimeout(() => {this.dataSource.data=Table_DATA}, 200);
       }
 
     });
@@ -209,22 +213,32 @@ export class TabelComponent implements OnInit, AfterViewInit {
       data: (JSON.parse(JSON.stringify(this.row_actioned)))
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    const closure = dialogRef.afterClosed().subscribe(result => {
       console.log('The edit dialog was closed');
       console.log(result);
 
+      let formatedData = result['Data'].split('/')[2]+"-"+result['Data'].split('/')[0]+"-"+result['Data'].split('/')[1];
+      result['Data'] = formatedData;
+
+      formatedData = this.row_actioned['Data'].split('/')[2]+"-"+this.row_actioned['Data'].split('/')[0]+"-"+this.row_actioned['Data'].split('/')[1];
+      this.row_actioned['Data'] = formatedData;
       /*
         Aici va fi un API call ce va avea ca parametru variabila "result"
-        si prin API se va executa ALTER in baza de date
+        si prin API se va executa UPDATE in baza de date
       */
-      
-      if (result !== "" && undefined) {
-        this.dataSource.data[this.index_row_actioned] = result;
-      }
-      this.dataSource.data = this.dataSource.data;
+
+      const APIdata = {
+        target:this.row_actioned,
+        modifier:result
+      };
+
+      this.server.edit_tblGED(APIdata).then((respose: any) => {
+        this.dashboard.getInfo();
+      })
+
+      setTimeout(() => this.dataSource.data=Table_DATA, 200);
 
     });
-
   }
 
   openDeleteDialog(): void {
@@ -305,8 +319,5 @@ export class TabelComponent implements OnInit, AfterViewInit {
       console.log('The more info dialog was closed');
       console.log(result);
     });
-
   }
-
-
 }

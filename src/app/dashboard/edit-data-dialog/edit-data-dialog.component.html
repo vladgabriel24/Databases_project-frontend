@@ -1,20 +1,20 @@
 <h1 mat-dialog-title>Edit Data</h1>
 <form #form="ngForm" (ngSubmit)="onSubmit()">
     <mat-dialog-content>
+      <!-- <mat-form-field>
+        <input matInput placeholder="Examen" name="Examen" [(ngModel)]="formData.Examen" required>
+      </mat-form-field> -->
+  
       <mat-form-field>
-        <input matInput placeholder="Position" name="position" [(ngModel)]="formData.position" required>
+        <input matInput placeholder="Sala" name="Sala" [(ngModel)]="formData.Sala" required>
       </mat-form-field>
   
       <mat-form-field>
-        <input matInput placeholder="Name" name="name" [(ngModel)]="formData.name" required>
+        <input matInput placeholder="Data" name="Data" [(ngModel)]="formData.Data" required>
       </mat-form-field>
   
       <mat-form-field>
-        <input matInput placeholder="Weight" name="weight" [(ngModel)]="formData.weight" required>
-      </mat-form-field>
-  
-      <mat-form-field>
-        <input matInput placeholder="Symbol" name="symbol" [(ngModel)]="formData.symbol" required>
+        <input matInput placeholder="Ora" name="Ora" [(ngModel)]="formData.Ora" required>
       </mat-form-field>
     </mat-dialog-content>
   

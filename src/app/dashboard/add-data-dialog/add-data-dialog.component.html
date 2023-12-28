@@ -2,19 +2,55 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
     <mat-dialog-content>
       <mat-form-field>
-        <input matInput placeholder="Position" name="position" [(ngModel)]="formData.position" required>
+        <input matInput placeholder="Examen" name="Examen" [(ngModel)]="formData.Examen" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Punctaj" name="Punctaj" [(ngModel)]="formData.Punctaj" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Prag" name="Prag" [(ngModel)]="formData.Prag" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Durata" name="Durata" [(ngModel)]="formData.Durata" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Discplina" name="Discplina" [(ngModel)]="formData.Disciplina" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Puncte Credit" name="Puncte Credit" [(ngModel)]="formData.puncte_credit" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Serie" name="Serie" [(ngModel)]="formData.Serie" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Specializare" name="Specializare" [(ngModel)]="formData.Specializare" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="An" name="An" [(ngModel)]="formData.An" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Grupa" name="Grupa" [(ngModel)]="formData.Grupa" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Sala" name="Sala" [(ngModel)]="formData.Sala" required>
       </mat-form-field>
   
       <mat-form-field>
-        <input matInput placeholder="Name" name="name" [(ngModel)]="formData.name" required>
+        <input matInput placeholder="Data" name="Data" [(ngModel)]="formData.Data" required>
       </mat-form-field>
   
       <mat-form-field>
-        <input matInput placeholder="Weight" name="weight" [(ngModel)]="formData.weight" required>
-      </mat-form-field>
-  
-      <mat-form-field>
-        <input matInput placeholder="Symbol" name="symbol" [(ngModel)]="formData.symbol" required>
+        <input matInput placeholder="Ora" name="Ora" [(ngModel)]="formData.Ora" required>
       </mat-form-field>
     </mat-dialog-content>
   

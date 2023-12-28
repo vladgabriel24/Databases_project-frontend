@@ -68,6 +68,55 @@ export class ServerService {
     return this.request('POST', `${environment.serverUrl}/more-info/examen`, data);
   }
 
+  edit_tblGED(data:any) {
+    return this.request('POST', `${environment.serverUrl}/edit-tblGED`, data);
+  }
+
+  async get_info_add(data:any) {
+    const url = `${environment.serverUrl}/info-add`;
+    const response = await this.http.post(url, data).toPromise();
+    
+    return response;
+  }
+
+  async add(data:any) {
+    const url = `${environment.serverUrl}/add`
+    const response = this.http.post(url, data).toPromise();
+
+    return response;
+  }
+
+  async add_data(data:any) {
+
+    try {
+      const result1:any = await this.get_info_add(data);
+
+      console.log(result1[0]);
+
+      const insertValues = {
+        idExamen:result1[0].idExamen,
+        idDiscipline:result1[0].idDiscipline,
+        idGrupa:result1[0].idGrupa,
+        sala:data.Sala,
+        dataExamen:data.Data,
+        ora:data.Ora
+      };
+
+      console.log(insertValues);
+      
+      const result2 = await this.add(insertValues);
+
+      console.log(result2);
+      
+      
+    } catch (error) {
+      console.log(error);
+    }
+
+
+  }
+
+
   deleteEvent(event:any) {
     // return this.request('DELETE', `${environment.serverUrl}/event/${event.id}`);
   }

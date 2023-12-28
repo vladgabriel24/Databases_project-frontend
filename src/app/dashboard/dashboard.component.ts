@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, AfterViewInit, ViewChild, OnInit } from '@angular/core';
+import { Component, inject, AfterViewInit, ViewChild, OnInit, ChangeDetectorRef } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
@@ -32,6 +32,7 @@ export interface Programare {
 
 export let Table_DATA: Programare[];
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -62,7 +63,7 @@ export let Table_DATA: Programare[];
 })
 export class DashboardComponent implements OnInit{
 
-  constructor(public server:ServerService){}
+  constructor(public server:ServerService, private cdr: ChangeDetectorRef,){}
 
   isDataLoaded=false;
 
@@ -74,7 +75,7 @@ export class DashboardComponent implements OnInit{
 
   }
 
-  getInfo() {
+  public getInfo() {
     this.server.get_tblGED().then((respose: any) => {
 
       Table_DATA = respose.map((item: Programare) => ({
@@ -83,7 +84,7 @@ export class DashboardComponent implements OnInit{
       }));
       
       this.isDataLoaded=true;
-    })    
+    })
   }
 
   sidenav_options =
