@@ -27,6 +27,7 @@ export class GrupaDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<GrupaDialogComponent>
     ,@Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) {console.log(data[1]);
+  }
 
 }

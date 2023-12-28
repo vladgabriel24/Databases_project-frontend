@@ -1,4 +1,8 @@
 <div mat-dialog-content>
-    {{data}}
+    <h4>Studenti:</h4>
+
+    @for (student of data[1]; track student) {
+        <h5>Nume: {{student.nume}}, Prenume: {{student.prenume}}, Email: {{student.email}}</h5>
+    }
 </div>
   

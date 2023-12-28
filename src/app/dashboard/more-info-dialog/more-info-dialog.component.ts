@@ -33,14 +33,14 @@ interface Profesor {
 }
 
 interface Serie {
-  denumire: string;
+  denumireSerie: string;
   specializare: string;
   an: number;
 }
 
 interface Grupa {
-  denumire: string;
-  numar: number;
+  denumireGrupa: string;
+  numarGrupa: number;
 }
 
 interface Student {
@@ -79,15 +79,15 @@ export class MoreInfoDialogComponent implements OnInit{
     ,@Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
-  info_disciplina?:Disciplina;
-  info_profesor?:Profesor;
-  info_serie?:Serie;
-  info_grupa?:Grupa;
+  info_disciplina!:Disciplina;
+  info_profesor!:Profesor;
+  info_serie!:Serie;
+  info_grupa!:Grupa;
 
-  studenti_serie?:Student[];
-  studenti_grupa?:Student[];
+  studenti_serie!:Student[];
+  studenti_grupa!:Student[];
 
-  info_examen?:Examen;
+  info_examen!:Examen;
 
   isDataLoaded=0;
 
@@ -99,7 +99,7 @@ export class MoreInfoDialogComponent implements OnInit{
     
     this.server.get_more_info_disciplina(this.data).then((respose: any) => {
 
-      this.info_disciplina = respose;
+      this.info_disciplina = respose[0];
       console.log(this.info_disciplina);
       
       this.isDataLoaded=this.isDataLoaded+1;
@@ -107,7 +107,7 @@ export class MoreInfoDialogComponent implements OnInit{
 
     this.server.get_more_info_profesor(this.data).then((respose: any) => {
 
-      this.info_profesor = respose;
+      this.info_profesor = respose[0]; //valoare HARDCODATA
       console.log(this.info_profesor);
       
       this.isDataLoaded=this.isDataLoaded+1;
@@ -115,7 +115,7 @@ export class MoreInfoDialogComponent implements OnInit{
 
     this.server.get_more_info_serie(this.data).then((respose: any) => {
 
-      this.info_serie = respose;
+      this.info_serie = respose[0];
       console.log(this.info_serie);
       
       this.isDataLoaded=this.isDataLoaded+1;
@@ -123,7 +123,7 @@ export class MoreInfoDialogComponent implements OnInit{
 
     this.server.get_more_info_grupa(this.data).then((respose: any) => {
 
-      this.info_grupa = respose;
+      this.info_grupa = respose[0];
       console.log(this.info_grupa);
       
       this.isDataLoaded=this.isDataLoaded+1;
@@ -147,7 +147,7 @@ export class MoreInfoDialogComponent implements OnInit{
 
     this.server.get_more_info_examen(this.data).then((respose: any) => {
 
-      this.info_examen = respose;
+      this.info_examen = respose[0];
       console.log(this.info_examen);
       
       this.isDataLoaded=this.isDataLoaded+1;
@@ -157,11 +157,9 @@ export class MoreInfoDialogComponent implements OnInit{
   }
 
   clickDisciplina() {
-    // un API call  
-
     const dialogRef = this.dialog.open(DisciplineDialogComponent, {
       width: '400px',
-      data: 'Discipline' // aici vom pune ce va returna API-ul
+      data: this.info_disciplina // aici vom pune ce va returna API-ul
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -172,12 +170,9 @@ export class MoreInfoDialogComponent implements OnInit{
   }
 
   clickProfesori() {
-    // un API call
-    console.log('bau');
-
     const dialogRef = this.dialog.open(ProfesorDialogComponent, {
       width: '400px',
-      data: 'Profesor' // aici vom pune ce va returna API-ul
+      data: this.info_profesor // aici vom pune ce va returna API-ul
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -188,12 +183,9 @@ export class MoreInfoDialogComponent implements OnInit{
   }
 
   clickSerie() {
-    // un API call
-    console.log('bau');
-
     const dialogRef = this.dialog.open(SerieDialogComponent, {
-      width: '400px',
-      data: 'Serie' // aici vom pune ce va returna API-ul
+      width: '600px',
+      data: [this.info_serie, this.studenti_serie] // aici vom pune ce va returna API-ul
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -204,12 +196,9 @@ export class MoreInfoDialogComponent implements OnInit{
   }
 
   clickGrupa() {
-    // un API call
-    console.log('bau');
-
     const dialogRef = this.dialog.open(GrupaDialogComponent, {
-      width: '400px',
-      data: 'Grupa' // aici vom pune ce va returna API-ul
+      width: '600px',
+      data: [this.info_grupa, this.studenti_grupa] // aici vom pune ce va returna API-ul
     });
 
     dialogRef.afterClosed().subscribe(result => {
