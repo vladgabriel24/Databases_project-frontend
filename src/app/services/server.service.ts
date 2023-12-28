@@ -107,7 +107,7 @@ export class ServerService {
       const result2 = await this.add(insertValues);
 
       console.log(result2);
-      
+
       
     } catch (error) {
       console.log(error);
@@ -116,9 +116,12 @@ export class ServerService {
 
   }
 
+  deleteSel(data:any) {
+    return this.request('DELETE', `${environment.serverUrl}/delete-multiple`, data);
+  }
 
-  deleteEvent(event:any) {
-    // return this.request('DELETE', `${environment.serverUrl}/event/${event.id}`);
+  delete(data:any) {
+    return this.request('DELETE', `${environment.serverUrl}/delete`, data);
   }
 
 }

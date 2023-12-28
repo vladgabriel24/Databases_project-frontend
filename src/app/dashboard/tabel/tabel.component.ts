@@ -72,10 +72,6 @@ export class TabelComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['Select', 'Examen', 'Sala', 'Data', 'Ora', 'Actions'];
 
-  /*
-    Aici la dataSource, vom avea un API call care ne va intoarce tabelul final
-    pe care vrem sa il vizionam in aplicatie
-  */
   dataSource = new MatTableDataSource(Table_DATA);
 
   selection = new SelectionModel<Programare>(true, []);
@@ -111,20 +107,6 @@ export class TabelComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.data = Table_DATA;
   }
-
-  // getInfo() {
-  //   this.server.get_tblGED().then((respose: any) => {
-
-  //     Table_DATA = respose.map((item: Programare) => ({
-  //       ...item,
-  //       Data: parseInt(item.Data.split("T")[0].split("-")[1]).toString()+"/"+parseInt(item.Data.split("T")[0].split("-")[2]).toString()+"/"+item.Data.split("T")[0].split("-")[0],
-  //     }));
-      
-  //   })
-
-  //   console.log(Table_DATA);
-    
-  // }
 
   applyFilter() {
     this.dataSource.data = Table_DATA;
@@ -222,10 +204,6 @@ export class TabelComponent implements OnInit, AfterViewInit {
 
       formatedData = this.row_actioned['Data'].split('/')[2]+"-"+this.row_actioned['Data'].split('/')[0]+"-"+this.row_actioned['Data'].split('/')[1];
       this.row_actioned['Data'] = formatedData;
-      /*
-        Aici va fi un API call ce va avea ca parametru variabila "result"
-        si prin API se va executa UPDATE in baza de date
-      */
 
       const APIdata = {
         target:this.row_actioned,
@@ -249,24 +227,21 @@ export class TabelComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The delete dialog was closed');
-      console.log(result);
-
-      /*
-        Aici va fi un API call ce va avea ca parametru variabila "result"
-        si prin API se va executa DELETE in baza de date
-      */
       
-      if(result !== null && undefined) {
-        let index = this.dataSource.data.indexOf(result);
-        for(let i=index; i<this.dataSource.data.length-1; i++) {
-          this.dataSource.data[i] = this.dataSource.data[i+1];
-        }
+      if(result !== null) {
 
-        this.dataSource.data.pop();
+        let formatedData = result['Data'].split('/')[2]+"-"+result['Data'].split('/')[0]+"-"+result['Data'].split('/')[1];
+        result['Data'] = formatedData;
+
+        console.log(result);
+
+        this.server.delete(result).then((respose: any) => {
+          this.dashboard.getInfo();
+        })
+  
+        setTimeout(() => {this.dataSource.data=Table_DATA; this.selection.clear()}, 200);
+        
       }
-
-      this.dataSource.data = this.dataSource.data;
-      console.log(this.dataSource.data);
     });
 
   }
@@ -279,40 +254,40 @@ export class TabelComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The delsel dialog was closed');
-      console.log(result);
 
-      /*
-        Aici va fi un API call ce va avea ca parametru variabila "result"
-        si prin API se va executa DELETE in baza de date
-      */
+      if(result !== null) {
 
-      if(result !== null && undefined) {
-
-        this.dataSource.data = this.dataSource.data.filter((item) => {
-          if(result.indexOf(item) == -1) {
-            return true;
-          }
-          else {
-            return false;
-          }
-        });
-
-        this.selection.clear();
+        result = result.map((item: any) => ({
+          ...item,
+          Data: item['Data'].split('/')[2]+"-"+item['Data'].split('/')[0]+"-"+item['Data'].split('/')[1],
+        }));
+  
+        const Dates = result.map((item:any) => item.Data);
+        const Hours = result.map((item:any) => item.Ora);
+        const Class = result.map((item:any) => item.Sala);
         
-        this.dataSource.data = this.dataSource.data;
+        const inputAPI = {
+          Data: Dates,
+          Ora: Hours,
+          Sala: Class
+        }
+  
+        console.log(inputAPI);
+
+        this.server.deleteSel(inputAPI).then((respose: any) => {
+          this.dashboard.getInfo();
+        })
+  
+        setTimeout(() => {this.dataSource.data=Table_DATA; this.selection.clear()}, 200);
       }
     });
 
   }
 
   openMoreInfoDialog(): void {
-    /*
-      Un API care sa ne returneze informatii suplimentare
-    */
-
     const dialogRef = this.dialog.open(MoreInfoDialogComponent, {
       width: '400px',
-      data: (JSON.parse(JSON.stringify(this.row_actioned))) // aici vom pune ce va returna API-ul
+      data: (JSON.parse(JSON.stringify(this.row_actioned)))
     });
 
     dialogRef.afterClosed().subscribe(result => {
