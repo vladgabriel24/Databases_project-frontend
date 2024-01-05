@@ -109,17 +109,18 @@ export class TabelComponent implements OnInit, AfterViewInit {
   }
 
   applyFilter() {
+    
     this.dataSource.data = Table_DATA;
 
-    if (this.filters.Examen !== "") {
+    if (this.filters.Examen !== '') {
       this.dataSource.data = this.dataSource.data.filter((item) => item.Examen.toString().includes(this.filters.Examen));
     }
 
-    if (this.filters.Sala !== "") {
+    else if (this.filters.Sala !== '') {
       this.dataSource.data = this.dataSource.data.filter((item) => item.Sala.includes(this.filters.Sala));
     }
 
-    if (this.filters.Data !== null) {
+    else if (this.filters.Data !== '' && this.filters.Data !== null) {
       console.log(this.filters.Data);
 
       const parsedDate = new Date(this.filters.Data);
@@ -130,13 +131,18 @@ export class TabelComponent implements OnInit, AfterViewInit {
       this.dataSource.data = this.dataSource.data.filter((item) => item.Data.toString().includes(formattedDate));
     }
 
-    if (this.filters.Ora !== "") {
+    else if (this.filters.Ora !== '') {
       this.dataSource.data = this.dataSource.data.filter((item) => item.Ora.toString().includes(this.filters.Ora));
+    }
+
+    else {
+      this.dataSource.data = Table_DATA;
     }
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+
   }
 
   isAllSelected() {
