@@ -34,7 +34,7 @@ import { MoreInfoDialogComponent } from '../more-info-dialog/more-info-dialog.co
 
 import { ServerService } from '../../services/server.service';
 
-import { DashboardComponent, Programare, Table_DATA } from '../dashboard.component';
+import { DashboardComponent, Programare, Table_DATA, Discipline } from '../dashboard.component';
 
 @Component({
   selector: 'app-tabel',
@@ -163,6 +163,7 @@ export class TabelComponent implements OnInit, AfterViewInit {
   openAddDialog(): void {
     const dialogRef = this.dialog.open(AddDataDialogComponent, {
       width: '400px',
+      data: Discipline
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -172,6 +173,8 @@ export class TabelComponent implements OnInit, AfterViewInit {
       if(result !== '') {
         let formatedData = result['Data'].split('/')[2]+"-"+result['Data'].split('/')[0]+"-"+result['Data'].split('/')[1];
         result['Data'] = formatedData;
+
+        console.log(result);
         
         this.server.add_data(result).then(()=>{this.dashboard.getInfo(); this.dataSource.data=Table_DATA});
 

@@ -30,7 +30,13 @@ export interface Programare {
   Ora: string;
 }
 
+export interface Discipline {
+  nume: string;
+  puncteCredit: string;
+}
+
 export let Table_DATA: Programare[];
+export let Discipline: Discipline[];
 
 
 @Component({
@@ -68,11 +74,9 @@ export class DashboardComponent implements OnInit{
   isDataLoaded=false;
 
   ngOnInit(): void {
-
-    console.log("vlad");
     
     this.getInfo();
-
+  
   }
 
   public getInfo() {
@@ -83,7 +87,12 @@ export class DashboardComponent implements OnInit{
         Data: parseInt(item.Data.split("T")[0].split("-")[1]).toString()+"/"+parseInt(item.Data.split("T")[0].split("-")[2]).toString()+"/"+item.Data.split("T")[0].split("-")[0],
       }));
       
+      console.log(Table_DATA);
       this.isDataLoaded=true;
+    })
+
+    this.server.get_tblDiscipline().then((respose: any) => {
+      Discipline = respose;
     })
   }
 

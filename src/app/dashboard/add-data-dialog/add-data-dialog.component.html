@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Hi</h1>
+<h1 mat-dialog-title>Create a Reservation</h1>
 <form #form="ngForm" (ngSubmit)="onSubmit()">
     <mat-dialog-content>
       <mat-form-field>
@@ -17,13 +17,18 @@
         <input matInput placeholder="Durata" name="Durata" [(ngModel)]="formData.Durata" required>
       </mat-form-field>
 
-      <mat-form-field>
-        <input matInput placeholder="Discplina" name="Discplina" [(ngModel)]="formData.Disciplina" required>
+      <mat-form-field required>
+        <mat-label>Discipline</mat-label>
+        <mat-select [(value)]="formData.Disciplina" required>
+        @for (discipline of this.data; track discipline) {
+          <mat-option value="{{discipline.nume}}">{{discipline.nume}}</mat-option>
+        }
+        </mat-select>
       </mat-form-field>
 
-      <mat-form-field>
+      <!-- <mat-form-field>
         <input matInput placeholder="Puncte Credit" name="Puncte Credit" [(ngModel)]="formData.puncte_credit" required>
-      </mat-form-field>
+      </mat-form-field> -->
 
       <mat-form-field>
         <input matInput placeholder="Serie" name="Serie" [(ngModel)]="formData.Serie" required>
@@ -47,6 +52,7 @@
   
       <mat-form-field>
         <input matInput placeholder="Data" name="Data" [(ngModel)]="formData.Data" required>
+        <mat-hint>MM/DD/YYYY</mat-hint>
       </mat-form-field>
   
       <mat-form-field>
