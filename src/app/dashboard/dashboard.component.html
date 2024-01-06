@@ -4,10 +4,18 @@
     <mat-sidenav #sidenav mode="side" opened class="sidenav-sidenav"
                  [fixedInViewport]="sidenav_options.fixed" [fixedTopGap]="sidenav_options.top"
                  [fixedBottomGap]="sidenav_options.bottom">
-      <mat-toolbar color="primary">Menu</mat-toolbar>
+      <div class="titlu"><mat-toolbar color="primary"><div class="meniu"><img src="..\assets\Logo.png" alt="Logo"></div></mat-toolbar></div>
       <mat-nav-list>
-        <a mat-list-item routerLink="/view-menu" routerLinkActive="active">View Menu</a>
-        <a mat-list-item routerLink="/edit-menu" routerLinkActive="active">Edit Menu</a>
+        <button routerLink="/view-menu" routerLinkActive="active">
+        <span>
+        <a><div class="scris">View Schedule</div></a>
+        </span>
+        </button>
+        <button  routerLink="/edit-menu" routerLinkActive="active">
+        <span>
+        <a><div class="scris">Edit Schedule</div></a>
+        </span>
+        </button>
       </mat-nav-list>
     </mat-sidenav>
 

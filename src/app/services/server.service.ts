@@ -33,6 +33,10 @@ export class ServerService {
     return this.request('GET', `${environment.serverUrl}/tblGED`);
   }
 
+  get_tblDiscipline() {
+    return this.request('GET', `${environment.serverUrl}/tblDiscipline`);
+  }
+
   get_more_info_disciplina(data:any) {
     console.log(data);
     return this.request('POST', `${environment.serverUrl}/more-info/disciplina`, data);

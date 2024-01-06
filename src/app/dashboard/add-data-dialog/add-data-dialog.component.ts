@@ -4,6 +4,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
 import {
   MatDialog,
   MAT_DIALOG_DATA,
@@ -14,6 +15,8 @@ import {
   MatDialogClose,
 } from '@angular/material/dialog';
 
+
+
 @Component({
   selector: 'app-add-data-dialog',
   standalone: true,
@@ -23,6 +26,7 @@ import {
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
+    MatSelectModule,
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
@@ -33,13 +37,25 @@ import {
 })
 export class AddDataDialogComponent {
 
-  formData : any = {};
-
   constructor(
-    public dialogRef: MatDialogRef<AddDataDialogComponent>
+    public dialogRef: MatDialogRef<AddDataDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
+  formData : any = {};
+
   onSubmit(): void {
+
+    for (let i = 0; i<this.data.length; i=i+1) {
+      if(this.data[i].nume == this.formData.Disciplina)
+      {
+        this.formData.puncte_credit = this.data[i].puncteCredit;
+      }
+    }
+
+    console.log(this.formData.Data);
+    
+
     this.dialogRef.close(this.formData);
   }
 
