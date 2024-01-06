@@ -39,11 +39,11 @@
 </mat-form-field>
 
 <!-- Butoanele care vor aparea cand intram pe meniul de edit -->
-<button *ngIf="currentMenu === 'edit-menu'" mat-raised-button (click)="openAddDialog()" matTooltip="Primary" color="primary">
+<button class="buton_edit1" *ngIf="currentMenu === 'edit-menu'" mat-raised-button (click)="openAddDialog()"  matTooltip="Insert">
     <mat-icon>plus_one</mat-icon>
 </button>
 
-<button *ngIf="currentMenu === 'edit-menu'" mat-raised-button (click)="openDelSelDialog()" matTooltip="Primary" color="primary">
+<button class="buton_edit2" *ngIf="currentMenu === 'edit-menu'" mat-raised-button (click)="openDelSelDialog()" matTooltip="Delete selected">
     <mat-icon>delete</mat-icon>
 </button>
 <!-- Butoanele care vor aparea cand intram pe meniul de edit -->

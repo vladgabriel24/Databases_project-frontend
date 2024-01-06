@@ -1,8 +1,10 @@
-.grid-container {
+.grid-container 
+{
   margin: 20px;
 }
 
-.dashboard-card {
+.dashboard-card 
+{
   position: absolute;
   top: 15px;
   left: 15px;
@@ -11,17 +13,122 @@
   font-weight: bold;
 }
 
-.more-button {
+.more-button 
+{
   position: absolute;
   top: 5px;
   right: 10px;
 }
 
-.dashboard-card-content {
+.dashboard-card-content 
+{
   text-align: center;
   font-size: 300;
 }
 
-mat-sidenav {
+mat-sidenav 
+{
   width: 200px;
+}
+
+button {
+  outline: none;
+  cursor: pointer;
+  border: none;
+  padding: 0.9rem 2rem;
+  margin: 0;
+  position: relative;
+  display: inline-block;
+  letter-spacing: 0.05rem;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ADA7C9;
+  color: ghostwhite;
+  margin-bottom: 10px;
+  width: 195px;
+  height: 50px;
+  margin-left: 1.5px;
+  text-align: center;
+ }
+ 
+ button span {
+  position: relative;
+  z-index: 10;
+  transition: color 0.4s;
+ }
+ 
+ button:hover span {
+  color:#273469;
+ }
+ 
+ button::before,
+ button::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+ }
+ 
+ button::before {
+  content: "";
+  background: #273469;
+  width: 120%;
+  left: -10%;
+  transform: skew(30deg);
+  transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+ }
+ 
+ button:hover::before {
+  transform: translate3d(100%, 0, 0);
+ }
+
+ .scris
+ {
+ font-weight: 500;
+ }
+
+.titlu
+{
+  padding: 36.5px;
+  background-color: #273469;
+  margin-bottom: -8px;
+  text-align: center;
+  text-indent: 30px;
+  margin-bottom: 15px;
+  border-color: black;
+}
+
+.meniu
+{
+  font-weight: 300;
+  font-size: 200;
+}
+
+img 
+{
+  height: 130px;
+  width: 140px ; 
+ margin-left: -52px;
+ margin-top: 10px;
+}
+
+.mat-toolbar
+{
+  background-color: #273469;
+}
+
+.sidenav-container
+{
+  border-radius: 20px;
+  background-color: #273469;
+}
+
+.mat-h1
+{
+  margin-left: 20px;
+  margin-top: 10px;
+  font-weight: 500;
+  color:#f4f0ff;
 }
