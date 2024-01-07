@@ -85,6 +85,7 @@ export class DashboardComponent implements OnInit{
       Table_DATA = respose.map((item: Programare) => ({
         ...item,
         Data: parseInt(item.Data.split("T")[0].split("-")[1]).toString()+"/"+parseInt(item.Data.split("T")[0].split("-")[2]).toString()+"/"+item.Data.split("T")[0].split("-")[0],
+        Ora: item.Ora.split(":")[0]+":"+item.Ora.split(":")[1]
       }));
       
       console.log(Table_DATA);
