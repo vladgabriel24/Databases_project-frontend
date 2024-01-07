@@ -1,0 +1,22 @@
+h1
+{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+h4
+{
+    font-weight: 400;
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+    margin-left: 10px;
+}
+
+.popup
+{
+    background-color: #A188A6;
+    height: 350px;
+    width: 400px;
+    padding: auto;
+}

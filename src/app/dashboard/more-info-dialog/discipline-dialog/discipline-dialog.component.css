@@ -1,0 +1,15 @@
+.popup
+{
+    font-weight: 400;
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+    text-align: center;
+    background-color: #A188A6;
+    padding: auto;
+
+}
+
+h4
+{
+    margin-top: 15px;
+    font-weight: 400px;
+}

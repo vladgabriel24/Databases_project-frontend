@@ -109,13 +109,19 @@ mat-label
   .buton_edit1
   {
     margin-left: 160px;
-    width: 10px;
-    align-content: center;
+    align-items: center;
   }
 
   .buton_edit2
   {
     margin-left: 10px;
-    width: 10px;
     align-content: center;
   }
+
+  mat-datepicker-toggle
+  {
+    border-radius: 25px;
+    margin-top: 15px;
+  }
+
+  

@@ -1,10 +1,12 @@
+<div class="popup">
 <h1 mat-dialog-title>More information</h1>
 <div mat-dialog-content *ngIf="isDataLoaded === 7">
   <h4 (click)="clickDisciplina()">Disciplina: {{info_disciplina.nume}}</h4>
   <h4 (click)="clickProfesori()">Profesor: {{info_profesor.nume}} {{info_profesor.prenume}}</h4>
   <h4 (click)="clickSerie()">Serie: {{info_serie.denumireSerie}}</h4>
   <h4 (click)="clickGrupa()">Grupa: {{info_grupa.denumireGrupa}}</h4>
-  <h5>Durata: {{info_examen.durata}}</h5>
-  <h5>Prag: {{info_examen.prag}}</h5>
-  <h5>Punctaj: {{info_examen.punctaj}}</h5>
+  <h4>Durata: {{info_examen.durata}}</h4>
+  <h4>Prag: {{info_examen.prag}}</h4>
+  <h4>Punctaj examen: {{info_examen.punctaj}}</h4>
+</div>
 </div>
