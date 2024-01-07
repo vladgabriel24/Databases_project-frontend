@@ -2,7 +2,7 @@
 {
     font-weight: 400;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-    background-color: #A188A6;
+    background-color: #273469;
     padding: auto;
 }
 
@@ -11,9 +11,11 @@ h4
     margin-left: 10px;
     margin-top: 15px;
     font-weight: 400px;
+    color: aliceblue;
 }
 
 h5
 {
     margin-left: 10px;
+    color: aliceblue;
 }

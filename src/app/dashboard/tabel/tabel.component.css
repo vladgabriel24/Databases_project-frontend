@@ -109,7 +109,7 @@ mat-label
   .buton_edit1
   {
     margin-left: 160px;
-    align-items: center;
+    align-content: center;
   }
 
   .buton_edit2
@@ -124,4 +124,11 @@ mat-label
     margin-top: 15px;
   }
 
+  .icon
+  {
+    align-items: center;
+  }
+
+
+  
   
