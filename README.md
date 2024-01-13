@@ -26,3 +26,23 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Further Improvements
+
+1. Improve the reservation form to be wider and more readable.<br>
+
+2. When creating a reservation:<br>
+- The user should be able to create/select the Exam (Exam name, points, threshold, time allocated)<br>
+- The user should be able to select the Series and the Year and based on that, only the available Groups should be available to be selected<br>
+- When selecting the building, only the available ones should show as an option <br>
+- When selecting the hour, only the available ones should show as an option <br>
+
+3. Validation on Exam name and required fields error.<br>
+
+4. Login functionality: When logging in as an admin, the edit menu and view menu should be available
+and when logging as an user, only the view menu should be available.<br>
+
+5. More UI components: graphs, indicators and so on..
+
+
+
